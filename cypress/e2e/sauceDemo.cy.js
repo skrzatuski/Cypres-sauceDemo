@@ -18,4 +18,7 @@ describe("SauceDemo page test", () => {
   it("Check correct btn amount on website", () => {
     inventoryPagePO.checkItemBtnAmount(6);
   });
+  it("Select all sorting options", () => {
+    inventoryPagePO.chooseAllOptions();
+  });
 });
