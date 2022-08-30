@@ -8,6 +8,21 @@ class InventoryPage {
   get selectContainer() {
     return cy.get("select.product_sort_container");
   }
+  get backpackBtn() {
+    return cy.get("#add-to-cart-sauce-labs-backpack");
+  }
+  get bikeLightBtn() {
+    return cy.get("#add-to-cart-sauce-labs-bike-light");
+  }
+  get tShirtBtn() {
+    return cy.get("#add-to-cart-sauce-labs-bolt-t-shirt");
+  }
+  get fleeceJacketBtn() {
+    return cy.get("#add-to-cart-sauce-labs-fleece-jacket");
+  }
+  get cartBtn() {
+    return cy.get("a.shopping_cart_link");
+  }
   checkItemAmount(value) {
     this.itemSelector.should("have.length", value);
   }
@@ -18,6 +33,18 @@ class InventoryPage {
     this.selectContainer.find("option").each((option) => {
       this.selectContainer.select(option.text());
     });
+  }
+  addItemToCart(item) {
+    item.click();
+  }
+  goToCard() {
+    this.cartBtn.click();
+  }
+  fullBuy() {
+    this.addItemToCart(this.backpackBtn);
+    this.addItemToCart(this.bikeLightBtn);
+    this.goToCard();
+    
   }
 }
 

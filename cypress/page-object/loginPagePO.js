@@ -11,11 +11,15 @@ class LoginPage {
   get errorMsg() {
     return cy.get("#login_button_container").find("h3").invoke("text");
   }
+  visit() {
+    cy.visit("/");
+  }
   clearInputs() {
     this.usernameInput.clear();
     this.passwordInput.clear();
   }
   signIn(email, password) {
+    this.visit();
     this.clearInputs();
     this.usernameInput.type(email);
     this.passwordInput.type(password);
