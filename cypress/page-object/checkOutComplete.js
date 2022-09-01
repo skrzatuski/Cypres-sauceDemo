@@ -1,9 +1,9 @@
 class CheckOutComplete {
-  get goBackBtn() {
-    return cy.get("#back-to-products");
-  }
+  elements = {
+    goBackBtn: () => cy.get("#back-to-products"),
+  };
   goBackToProducts() {
-    this.goBackBtn.click();
+    this.elements.goBackBtn().click();
   }
   confirmText() {
     cy.get("#checkout_complete_container")

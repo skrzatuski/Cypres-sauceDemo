@@ -1,48 +1,48 @@
 /// <reference types="cypress" />
 
-import cartPO from "../page-object/cartPO";
-import checkOutCompletePO from "../page-object/checkOutCompletePO";
-import checkoutFirstStepPO from "../page-object/checkoutFirstStepPO";
-import checkOutStepTwoPO from "../page-object/checkOutStepTwoPO";
-import inventoryPagePO from "../page-object/inventoryPagePO";
-import loginPagePO from "../page-object/loginPagePO";
+import cartPO from "../page-object/cart";
+import checkoutComplete from "../page-object/checkOutComplete";
+import checkoutFirstPage from "../page-object/checkoutFirstStep";
+import checkoutStepTwo from "../page-object/checkOutStepTwo";
+import inventoryPage from "../page-object/inventoryPage";
+import loginPage from "../page-object/loginPage";
 
 describe("SauceDemo page test", () => {
   it("Fail Login test", () => {
-    loginPagePO.failLogin();
+    loginPage.failLogin();
   });
   it("Sign in", () => {
-    loginPagePO.signIn("standard_user", "secret_sauce");
+    loginPage.signIn("standard_user", "secret_sauce");
   });
   it("Check correct item amount on website", () => {
-    inventoryPagePO.checkItemAmount(6);
+    inventoryPage.checkItemAmount(6);
   });
   it("Check correct btn amount on website", () => {
-    inventoryPagePO.checkItemBtnAmount(6);
+    inventoryPage.checkItemBtnAmount(6);
   });
   it("Select all sorting options", () => {
-    inventoryPagePO.chooseAllOptions();
+    inventoryPage.chooseAllOptions();
   });
   it("Add item to card", () => {
-    inventoryPagePO.addItemToCart(inventoryPagePO.backpackBtn);
-    inventoryPagePO.addItemToCart(inventoryPagePO.bikeLightBtn);
-    inventoryPagePO.addItemToCart(inventoryPagePO.fleeceJacketBtn);
+    inventoryPage.addItemToCart(inventoryPage.elements.backpackBtn());
+    inventoryPage.addItemToCart(inventoryPage.elements.bikeLightBtn());
+    inventoryPage.addItemToCart(inventoryPage.elements.fleeceJacketBtn());
   });
   it("Fully item buy test", () => {
-    loginPagePO.signIn("standard_user", "secret_sauce");
-    inventoryPagePO.addItemToCart(inventoryPagePO.fleeceJacketBtn);
-    inventoryPagePO.goToCard();
+    loginPage.signIn("standard_user", "secret_sauce");
+    inventoryPage.addItemToCart(inventoryPage.elements.fleeceJacketBtn());
+    inventoryPage.goToCard();
     cartPO.checkout();
-    cy.url().should(
-      "equal",
-      "https://www.saucedemo.com/checkout-step-one.html"
-    );
-    checkoutFirstStepPO.completeTheForm("Mariano", "Italiano", "94-052");
-    checkOutStepTwoPO.confirmOrder();
-    checkOutCompletePO.confirmText();
+    cy.url().should("equal", inventoryPage.elements.websiteStepOneUrl());
+    checkoutFirstPage.completeTheForm("Mariano", "Italiano", "94-052");
+    checkoutStepTwo.confirmOrder();
+    checkoutComplete.confirmText();
   });
   it("Go back to products after complete order", () => {
-    checkOutCompletePO.goBackToProducts();
-    
+    checkoutComplete.goBackToProducts();
+  });
+  it("Check menu visibility in inventory", () => {
+    loginPage.signIn("standard_user", "secret_sauce");
+    inventoryPage.isMenuVisible();
   });
 });
